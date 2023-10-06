@@ -10,7 +10,7 @@ editor_camera = EditorCamera()
 
 planet = Planet(
     25, # Resolution
-    Planet.FaceRenderMask.FRONT,
+    Planet.FaceRenderMask.ALL,
     ShapeSettings(
         planet_radius=1.0,
         noise_layers=[

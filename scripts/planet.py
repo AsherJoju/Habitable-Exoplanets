@@ -77,7 +77,7 @@ class Planet:
             
             render_face = (
                 self.face_render_mask == Planet.FaceRenderMask.ALL
-                or self.face_render_mask == i + 1
+                or self.face_render_mask == list(Planet.FaceRenderMask)[i + 1]
             )
             self.entities[i].enabled = render_face
     
