@@ -62,13 +62,13 @@ class Planet:
             if len(self.entities) == i:
                 entity = Entity(
                     model=Mesh(mode="triangle"),
-                    # texture=Texture.new((1, 1)),
                     shader=self.color_generator.shader
                 )
                 self.entities.append(entity)
             
             terrain_face = TerrainFace(
                 self.shape_generator,
+                self.color_generator,
                 self.entities[i].model,
                 self.resolution,
                 directions[i]
@@ -86,6 +86,7 @@ class Planet:
         for i in range(6):
             if self.entities[i].enabled:
                 self.terrain_faces[i].construct_mesh()
+                # print(*self.terrain_faces[i].mesh.uvs, sep="\n", end="\n----------\n")
         
         self.color_generator.update_elevation(self.shape_generator.elevation_min_max)
     

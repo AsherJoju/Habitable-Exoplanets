@@ -6,7 +6,7 @@ from scripts.planet import Planet
 from ursina import color, EditorCamera, Ursina
 
 planet = Planet(
-    15, # Resolution
+    25, # Resolution
     Planet.FaceRenderMask.ALL,
     ShapeSettings(
         planet_radius=1.0,
@@ -18,10 +18,10 @@ planet = Planet(
                     filter_type=NoiseSettings.FilterType.SIMPLE,
                     simple_noise_settings=NoiseSettings.SimpleNoiseSettings(
                         layers=3,
-                        strength=0.25,
-                        persistence=0.75,
+                        strength=0.5,
+                        persistence=0.5,
                         base_roughness=1,
-                        roughness=1.5,
+                        roughness=2,
                         min_value=1
                     )
                 )
@@ -33,10 +33,10 @@ planet = Planet(
                     filter_type=NoiseSettings.FilterType.RIGID,
                     rigid_noise_settings=NoiseSettings.RigidNoiseSettings(
                         layers=6,
-                        strength=4,
-                        persistence=0.25,
-                        base_roughness=1.5,
-                        roughness=2.5,
+                        strength=3,
+                        persistence=0.5,
+                        base_roughness=2,
+                        roughness=2,
                         min_value=1,
                         sharpness=2,
                         weight_scaler=1
@@ -50,35 +50,33 @@ planet = Planet(
             [
                 ColorSettings.BiomeColorSettings.Biome(
                     Gradient([
-                        (0.0, color.black),
-                        (0.5, color.gray),
-                        (1.0, color.white)
+                        (0, color.Color(0.5, 0.5, 1, 1)),
+                        (0.1, color.Color(0.25, 0.25, 0.75, 1)),
+                        (0.2, color.Color(0.25, 0.75, 0, 1)),
+                        (0.55, color.Color(0.25, 1, 0.25, 1)),
+                        (0.8, color.Color(0.75, 0.75, 0.75, 1)),
+                        (0.8, color.Color(0.5, 0.5, 0.5, 1)),
+                        (1, color.Color(1, 1, 1, 1))
                     ]),
-                    tint=color.red,
-                    tint_percent=0.25,
-                    start_height=0
-                ),
-                ColorSettings.BiomeColorSettings.Biome(
-                    Gradient([
-                        (0.0, color.black),
-                        (0.5, color.gray),
-                        (1.0, color.white)
-                    ]),
-                    tint=color.green,
-                    tint_percent=0.25,
-                    start_height=0.25
-                ),
-                ColorSettings.BiomeColorSettings.Biome(
-                    Gradient([
-                        (0.0, color.black),
-                        (0.5, color.gray),
-                        (1.0, color.white)
-                    ]),
-                    tint=color.blue,
-                    tint_percent=0.25,
-                    start_height=0.75
+                    tint=color.white,
+                    tint_percent=0,
+                    start_height=0.1
                 )
-            ]
+            ],
+            noise=NoiseSettings(
+                filter_type=NoiseSettings.FilterType.SIMPLE,
+                simple_noise_settings=NoiseSettings.SimpleNoiseSettings(
+                    layers=3,
+                    strength=1,
+                    persistence=0.5,
+                    base_roughness=1,
+                    roughness=2,
+                    min_value=0
+                )
+            ),
+            noise_offset=0.75,
+            noise_strength=0.25,
+            blend=0
         )
     )
 )

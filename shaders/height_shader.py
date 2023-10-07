@@ -4,13 +4,11 @@ from ursina import Shader
 
 class HeightShader(Shader):
     
-    def __init__(self, min_max: MinMax, biomes: list[float], texture: list, size: tuple[int, int]):
+    def __init__(self, min_max: MinMax, texture: list, size: tuple[int, int]):
         self.default_input = {
             "min_max": min_max.tuple(),
-            "biomes": biomes,
             "texture": texture,
-            "height": size[0],
-            "width": size[1]
+            "resolution": size[1]
         }
         
         self.vertex = """
@@ -20,14 +18,15 @@ class HeightShader(Shader):
         uniform mat4 p3d_ModelViewProjectionMatrix;
         
         in vec4 p3d_Vertex;
+        in vec2 p3d_MultiTexCoord0;
         
-        out float distance;
-        out float latitude;
+        out float vertex_length;
+        out vec2 uv;
         
         void main() {
             gl_Position = p3d_ModelViewProjectionMatrix * p3d_Vertex;
-            distance = length(p3d_Vertex.xyz);
-            latitude = (p3d_Vertex.y + 1) / 2.0;
+            vertex_length = length(p3d_Vertex.xyz);
+            uv = p3d_MultiTexCoord0;
         }
         
         """
@@ -37,34 +36,29 @@ class HeightShader(Shader):
         #version 140
         
         uniform vec2 min_max;
-        uniform float biomes[%i];
         uniform vec3 texture[%i * %i];
-        uniform int height;
-        uniform int width;
+        uniform int resolution;
         
-        in float distance;
-        in float latitude;
+        in float vertex_length;
+        in vec2 uv;
         
         out vec4 frag_color;
         
+        float inverseLerp(float a, float b, float x) {
+            return (x - a) / (b - a);
+        }
+        
         void main() {
-            float point = clamp((distance - min_max.x) / (min_max.y - min_max.x), 0.0, 1.0);
+            int height = %i;
             
-            int biome = 0;
-            for (int i = 0; i < height; i++) {
-                if (biomes[i] < latitude) {
-                    biome = i;
-                } else {
-                    break;
-                }
-            }
-            
-            int index = int(biome * width + point * width);
-            vec4 color = vec4(texture[index], 1);
+            vec2 index = vec2(inverseLerp(min_max.x, min_max.y, vertex_length), uv.x);
+            vec4 color = vec4(texture[
+                int(index.y * (height - 1)) * resolution + int(index.x * resolution)
+            ], 1);
             
             frag_color = color;
         }
         
-        """ % (size[0], *size)
+        """ % (*size, size[0])
         
         super().__init__(vertex=self.vertex, fragment=self.fragment, default_input=self.default_input)

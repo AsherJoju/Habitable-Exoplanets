@@ -1,7 +1,8 @@
 from scripts.color_settings import ColorSettings
 from scripts.min_max import MinMax
+from scripts.noise_filter_factory import NoiseFilterFactory
 from shaders.height_shader import HeightShader
-from ursina import Color, Vec3
+from ursina import inverselerp, Vec3
 
 
 class ColorGenerator:
@@ -10,17 +11,41 @@ class ColorGenerator:
         self.texture_resolution = 64
         self.settings = settings
         self.texture: list[tuple] = []
-        
-        biomes = []
-        for biome in self.settings.biome_color_settings.biomes:
-            biomes.append(biome.start_height)
-        
+        self.noise_filter = NoiseFilterFactory.create_noise_filter(
+            self.settings.biome_color_settings.noise
+        )
         self.shader = HeightShader(
             MinMax(),
-            biomes,
             self.texture,
             (len(self.settings.biome_color_settings.biomes), self.texture_resolution)
         )
+    
+    
+    def get_biome_percent_from_point(self, point: Vec3):
+        height_percent = (point.y + 1) / 2.0
+        height_percent += (
+            self.noise_filter.evaluate(point) - self.settings.biome_color_settings.noise_offset
+        ) * self.settings.biome_color_settings.noise_strength
+        biome_index = 0
+        num_biomes = len(self.settings.biome_color_settings.biomes)
+        blend_range = self.settings.biome_color_settings.blend / 2.0 + 0.0001 # Make it Non-Zero
+        
+        # for i in range(num_biomes):
+        #     distance = height_percent - self.settings.biome_color_settings.biomes[i].start_height
+        #     weight = inverselerp(-blend_range, blend_range, distance)
+            
+        #     biome_index *= (1 - weight)
+        #     biome_index += i * weight
+
+        for i in range(num_biomes):
+            if self.settings.biome_color_settings.biomes[i].start_height < height_percent:
+                biome_index = i
+            else:
+                break
+        
+        biome_index = max(0, min(biome_index, num_biomes - 1))
+        
+        return biome_index / max(1, num_biomes - 1)
     
     
     def update_elevation(self, elevation_min_max: MinMax):
@@ -35,9 +60,7 @@ class ColorGenerator:
                 g_col = biome.gradient.evaluate(i / (self.texture_resolution - 1))
                 tint = biome.tint
                 self.texture.append(
-                    g_col * (
-                        1 - biome.tint_percent
-                    ) + Vec3(
+                    g_col * (1 - biome.tint_percent) + Vec3(
                         tint.r,
                         tint.g,
                         tint.b
