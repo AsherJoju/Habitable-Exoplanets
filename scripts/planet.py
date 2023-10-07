@@ -4,8 +4,7 @@ from scripts.color_settings import ColorSettings
 from scripts.shape_generator import ShapeGenerator
 from scripts.shape_settings import ShapeSettings
 from scripts.terrain_face import TerrainFace
-from ursina import Entity, Mesh, Vec3
-from ursina.shaders import basic_lighting_shader
+from ursina import Entity, Mesh, Texture, Vec3
 
 
 class Planet:
@@ -63,7 +62,8 @@ class Planet:
             if len(self.entities) == i:
                 entity = Entity(
                     model=Mesh(mode="triangle"),
-                    shader=basic_lighting_shader
+                    # texture=Texture.new((1, 1)),
+                    shader=self.color_generator.shader
                 )
                 self.entities.append(entity)
             
@@ -86,8 +86,12 @@ class Planet:
         for i in range(6):
             if self.entities[i].enabled:
                 self.terrain_faces[i].construct_mesh()
+        
+        self.color_generator.update_elevation(self.shape_generator.elevation_min_max)
     
     
     def generate_colors(self):
-        for entity in self.entities:
-            entity.color = self.color_settings.planet_color
+        self.color_generator.update_colors()
+        for i in range(6):
+            if self.entities[i].enabled:
+                self.entities[i].shader = self.color_generator.shader

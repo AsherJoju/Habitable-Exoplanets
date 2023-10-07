@@ -1,4 +1,5 @@
 from ursina import Mesh, Vec2, Vec3
+from scripts.color_generator import ColorGenerator
 
 from scripts.shape_generator import ShapeGenerator
 

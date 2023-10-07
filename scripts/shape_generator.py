@@ -1,3 +1,4 @@
+from scripts.min_max import MinMax
 from scripts.noise_filter import NoiseFilter
 from scripts.noise_filter_factory import NoiseFilterFactory
 from scripts.shape_settings import ShapeSettings
@@ -9,6 +10,7 @@ class ShapeGenerator:
     def __init__(self, settings: ShapeSettings):
         self.settings = settings
         self.noise_filters: list[NoiseFilter] = []
+        self.elevation_min_max = MinMax()
         
         for i in range(len(self.settings.noise_layers)):
             self.noise_filters.append(
@@ -30,4 +32,8 @@ class ShapeGenerator:
                 mask = first_layer_value if self.settings.noise_layers[i].use_first_layer_as_mask else 1
                 elevation += self.noise_filters[i].evaluate(point_on_unit_sphere) * mask
         
-        return point_on_unit_sphere * self.settings.planet_radius * (elevation + 1)
+        elevation = self.settings.planet_radius * (elevation + 1)
+        
+        self.elevation_min_max.add_value(elevation)
+        
+        return point_on_unit_sphere * elevation

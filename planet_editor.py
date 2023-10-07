@@ -1,15 +1,12 @@
 from scripts.color_settings import ColorSettings
+from scripts.gradient import Gradient
 from scripts.noise_settings import NoiseSettings
 from scripts.shape_settings import ShapeSettings
 from scripts.planet import Planet
 from ursina import color, EditorCamera, Ursina
 
-
-app = Ursina()
-editor_camera = EditorCamera()
-
 planet = Planet(
-    25, # Resolution
+    15, # Resolution
     Planet.FaceRenderMask.ALL,
     ShapeSettings(
         planet_radius=1.0,
@@ -22,7 +19,7 @@ planet = Planet(
                     simple_noise_settings=NoiseSettings.SimpleNoiseSettings(
                         layers=3,
                         strength=0.25,
-                        persistence=0.5,
+                        persistence=0.75,
                         base_roughness=1,
                         roughness=1.5,
                         min_value=1
@@ -37,21 +34,59 @@ planet = Planet(
                     rigid_noise_settings=NoiseSettings.RigidNoiseSettings(
                         layers=6,
                         strength=4,
-                        persistence=0.5,
+                        persistence=0.25,
                         base_roughness=1.5,
-                        roughness=2,
+                        roughness=2.5,
                         min_value=1,
                         sharpness=2,
-                        weight_scaler=0.75
+                        weight_scaler=1
                     )
                 )
-            ),
+            )
         ]
     ),
     ColorSettings(
-        planet_color=color.white
+        ColorSettings.BiomeColorSettings(
+            [
+                ColorSettings.BiomeColorSettings.Biome(
+                    Gradient([
+                        (0.0, color.black),
+                        (0.5, color.gray),
+                        (1.0, color.white)
+                    ]),
+                    tint=color.red,
+                    tint_percent=0.25,
+                    start_height=0
+                ),
+                ColorSettings.BiomeColorSettings.Biome(
+                    Gradient([
+                        (0.0, color.black),
+                        (0.5, color.gray),
+                        (1.0, color.white)
+                    ]),
+                    tint=color.green,
+                    tint_percent=0.25,
+                    start_height=0.25
+                ),
+                ColorSettings.BiomeColorSettings.Biome(
+                    Gradient([
+                        (0.0, color.black),
+                        (0.5, color.gray),
+                        (1.0, color.white)
+                    ]),
+                    tint=color.blue,
+                    tint_percent=0.25,
+                    start_height=0.75
+                )
+            ]
+        )
     )
 )
+
+
+app = Ursina()
+editor_camera = EditorCamera()
+
 planet.construct_planet()
 
 app.run()
