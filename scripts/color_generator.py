@@ -11,7 +11,7 @@ from ursina import Vec3
 class ColorGenerator:
     
     def __init__(self, settings: ColorSettings):
-        self.texture_resolution = 128
+        self.texture_resolution = 128 # TEXTURE RESOLUTION
         self.settings = settings
         self.texture: list[tuple] = []
         self.noise_filter = NoiseFilterFactory.create_noise_filter(

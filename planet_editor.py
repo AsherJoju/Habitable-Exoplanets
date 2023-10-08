@@ -21,7 +21,9 @@ ROCK_COLOR = color.Color(0.5, 0.5, 0.5, 1) # ROCK COLOR (effects moutains)
 
 
 planet = Planet(
-    25, # Resolution
+    50, # Resolution - THIS PROGRAM CAN TAKE TIME BASED ON THIS
+    # IF YOU WISH TO DECREASE TIME BY SACRIFICING COLOR,
+    # Goto color_generator.py and decrease texture_resolution
     Planet.FaceRenderMask.ALL,
     ShapeSettings(
         planet_radius=RADIUS,
@@ -66,10 +68,10 @@ planet = Planet(
                 ColorSettings.BiomeColorSettings.Biome(
                     Gradient([
                         (0, SEA_COLOR),
-                        (5 / TEMPRATURE / 10, color.Color(0.75, 0.75, 0, 1.0)),
+                        (0.5 / TEMPRATURE, color.Color(0.75, 0.75, 0, 1.0)),
                         (1 / TEMPRATURE, FLORA_COLOR),
                         (2 / TEMPRATURE, FLORA_COLOR * WATER_AVAILABILITY * 0.75),
-                        (4 / TEMPRATURE, FLORA_COLOR * WATER_AVAILABILITY * 0.5),
+                        (3.5 / TEMPRATURE, FLORA_COLOR * WATER_AVAILABILITY * 0.5),
                         (5 / TEMPRATURE, FLORA_COLOR * WATER_AVAILABILITY * 0.25),
                         (7 / TEMPRATURE, ROCK_COLOR / TEMPRATURE * 10),
                         (1, color.Color(1, 1, 1, 1) / TEMPRATURE * 10)
