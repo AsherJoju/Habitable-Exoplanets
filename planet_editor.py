@@ -6,10 +6,12 @@ from scripts.planet import Planet
 from ursina import color, EditorCamera, Ursina
 
 
-RADIUS = 1
-SEA_LEVEL = 1
-SEA_COLOR = color.Color(0.25, 0.25, 1.0, 1.0)
-FLORA_COLOR = color.Color(0.25, 0.75, 0.25, 1.0)
+RADIUS = 1 # Radius of the planet
+SEA_LEVEL = 1 # Sea Level, (effects how much land is there)
+SEA_COLOR = color.Color(0.25, 0.25, 1.0, 1.0) # Sea / Water Color (based on Sun and Sky)
+FLORA_COLOR = color.Color(0.25, 0.75, 0.25, 1.0) # Planet Color (effects Land Color)
+WATER_AVAILABILITY = 1 # Efects strength of Flora COlor
+TEMPRATURE = 10 # Effects Ration Of Plants over Rock and Snow
 
 
 planet = Planet(
@@ -58,13 +60,13 @@ planet = Planet(
                 ColorSettings.BiomeColorSettings.Biome(
                     Gradient([
                         (0, SEA_COLOR),
-                        (0.05, color.Color(0.75, 0.75, 0, 1.0)),
-                        (0.1, FLORA_COLOR),
-                        (0.2, FLORA_COLOR * 0.75),
-                        (0.4, FLORA_COLOR * 0.5),
-                        (0.5, FLORA_COLOR * 0.25),
-                        (0.7, color.Color(0.5, 0.5, 0.5, 1.0)),
-                        (1, color.Color(1, 1, 1, 1))
+                        (5 / TEMPRATURE / 10, color.Color(0.75, 0.75, 0, 1.0)),
+                        (1 / TEMPRATURE, FLORA_COLOR),
+                        (2 / TEMPRATURE, FLORA_COLOR * 0.75),
+                        (4 / TEMPRATURE, FLORA_COLOR * 0.5),
+                        (5 / TEMPRATURE, FLORA_COLOR * 0.25),
+                        (7 / TEMPRATURE, color.Color(0.5, 0.5, 0.5, 1.0) / TEMPRATURE * 10),
+                        (1, color.Color(1, 1, 1, 1) / TEMPRATURE)
                     ]),
                     tint=color.white,
                     tint_percent=0,
