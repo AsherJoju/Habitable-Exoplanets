@@ -13,13 +13,13 @@ PLANET_DISTANCE = 1 # in AUs (effect teprature)
 SEA_LEVEL = 1 # Sea Level, (effects how much land is there) used in percent
 RADIUS = 1 # Radius of the planet (scales it) in percent
 WATER_AVAILABILITY = 0.75 # Efects strength of Flora Color in percent
-TEMPRATURE = SUN_MASS * PLANET_DISTANCE * 10 # Effects Ration Of Plants over Rock and Snow
 
 SEA_COLOR = color.Color(0.25, 0.25, 1.0, 1.0) # Sea / Water Color (based on Sun and Sky)
 FLORA_COLOR = color.Color(0.25, 0.75, 0.25, 1.0) # Plant Color (effects Land Color)
 ROCK_COLOR = color.Color(0.5, 0.5, 0.5, 1) # ROCK COLOR (effects moutains)
 
 
+temprature = SUN_MASS * PLANET_DISTANCE * 10 # Effects Ration Of Plants over Rock and Snow
 planet = Planet(
     50, # Resolution - THIS PROGRAM CAN TAKE TIME BASED ON THIS
     # IF YOU WISH TO DECREASE TIME BY SACRIFICING COLOR,
@@ -68,13 +68,13 @@ planet = Planet(
                 ColorSettings.BiomeColorSettings.Biome(
                     Gradient([
                         (0, SEA_COLOR),
-                        (0.5 / TEMPRATURE, color.Color(0.75, 0.75, 0, 1.0)),
-                        (1 / TEMPRATURE, FLORA_COLOR),
-                        (2 / TEMPRATURE, FLORA_COLOR * WATER_AVAILABILITY * 0.75),
-                        (3.5 / TEMPRATURE, FLORA_COLOR * WATER_AVAILABILITY * 0.5),
-                        (5 / TEMPRATURE, FLORA_COLOR * WATER_AVAILABILITY * 0.25),
-                        (7.5 / TEMPRATURE, ROCK_COLOR / TEMPRATURE * 10),
-                        (1, color.Color(1, 1, 1, 1) / TEMPRATURE * 10)
+                        (0.5 / temprature, color.Color(0.75, 0.75, 0, 1.0)),
+                        (1 / temprature, FLORA_COLOR),
+                        (2 / temprature, FLORA_COLOR * WATER_AVAILABILITY * 0.75),
+                        (3.5 / temprature, FLORA_COLOR * WATER_AVAILABILITY * 0.5),
+                        (5 / temprature, FLORA_COLOR * WATER_AVAILABILITY * 0.25),
+                        (7.5 / temprature, ROCK_COLOR / temprature * 10),
+                        (1, color.Color(1, 1, 1, 1) / temprature * 10)
                     ]),
                     tint=color.white,
                     tint_percent=0,
