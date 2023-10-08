@@ -72,10 +72,10 @@ planet = Planet(
                     Gradient([
                         (0, SEA_COLOR),
                         (0.5 / temprature, color.Color(0.75, 0.75, 0, 1.0)),
-                        (1 / temprature, FLORA_COLOR / WATER_AVAILABILITY),
-                        (2 / temprature, FLORA_COLOR * 0.75 / WATER_AVAILABILITY),
-                        (3.5 / temprature, FLORA_COLOR * 0.5 / WATER_AVAILABILITY),
-                        (5 / temprature, FLORA_COLOR  * 0.25 / WATER_AVAILABILITY),
+                        (1 / temprature, FLORA_COLOR),
+                        (2 / temprature, FLORA_COLOR * WATER_AVAILABILITY * 0.75),
+                        (3.5 / temprature, FLORA_COLOR * WATER_AVAILABILITY * 0.5),
+                        (5 / temprature, FLORA_COLOR * WATER_AVAILABILITY * 0.25),
                         (7.5 / temprature, ROCK_COLOR / temprature * 10),
                         (1, color.Color(1, 1, 1, 1) / temprature * 10)
                     ]),
