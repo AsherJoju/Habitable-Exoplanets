@@ -8,7 +8,7 @@ from ursina import inverselerp, Vec3
 class ColorGenerator:
     
     def __init__(self, settings: ColorSettings):
-        self.texture_resolution = 64
+        self.texture_resolution = 128
         self.settings = settings
         self.texture: list[tuple] = []
         self.noise_filter = NoiseFilterFactory.create_noise_filter(
