@@ -7,7 +7,7 @@ from ursina import color, EditorCamera, Ursina
 
 
 # Resolution
-RESOLUTION = 15 # Resolution - THIS PROGRAM CAN TAKE TIME BASED ON THIS
+RESOLUTION = 50 # Resolution - THIS PROGRAM CAN TAKE TIME BASED ON THIS
 # IF YOU WISH TO DECREASE TIME BY SACRIFICING COLOR,
 # Goto color_generator.py and decrease texture_resolution
 
