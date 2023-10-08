@@ -20,7 +20,7 @@ class NoiseSettings:
             base_roughness=1.0,
             roughness=2.0,
             center=Vec3(0, 0, 0),
-            min_value=0.0
+            min_value=1.0
         ):
             self.layers = layers
             self.strength = strength

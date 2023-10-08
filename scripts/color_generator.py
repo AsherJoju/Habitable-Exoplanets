@@ -1,14 +1,17 @@
+from opensimplex import OpenSimplex
+from time import time_ns
 from scripts.color_settings import ColorSettings
 from scripts.min_max import MinMax
 from scripts.noise_filter_factory import NoiseFilterFactory
+from scripts.noise_settings import NoiseSettings
 from shaders.height_shader import HeightShader
-from ursina import inverselerp, Vec3
+from ursina import Vec3
 
 
 class ColorGenerator:
     
     def __init__(self, settings: ColorSettings):
-        self.texture_resolution = 64
+        self.texture_resolution = 128 # TEXTURE RESOLUTION
         self.settings = settings
         self.texture: list[tuple] = []
         self.noise_filter = NoiseFilterFactory.create_noise_filter(
@@ -60,11 +63,8 @@ class ColorGenerator:
                 g_col = biome.gradient.evaluate(i / (self.texture_resolution - 1))
                 tint = biome.tint
                 self.texture.append(
-                    g_col * (1 - biome.tint_percent) + Vec3(
-                        tint.r,
-                        tint.g,
-                        tint.b
-                    ) * biome.tint_percent
+                    g_col * (1 - biome.tint_percent)
+                    + Vec3(tint.r, tint.g, tint.b) * biome.tint_percent
                 )
         
         self.shader.default_input["texture"] = self.texture

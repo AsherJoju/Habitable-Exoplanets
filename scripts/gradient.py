@@ -40,9 +40,9 @@ class Gradient:
                 t = (point - point1) / (point2 - point1)
                 
                 color = Vec3(
-                    (color1.r + (color2.r - color1.r) * t),
-                    (color1.g + (color2.g - color1.g) * t),
-                    (color1.b + (color2.b - color1.b) * t)
+                    (color1.x + (color2.x - color1.x) * t),
+                    (color1.y + (color2.y - color1.y) * t),
+                    (color1.z + (color2.z - color1.z) * t)
                 )
                 return color
         return Vec3(0, 0, 0)
