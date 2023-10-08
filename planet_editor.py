@@ -6,6 +6,11 @@ from scripts.planet import Planet
 from ursina import color, EditorCamera, Ursina
 
 
+# Resolution
+RESOLUTION = 15 # Resolution - THIS PROGRAM CAN TAKE TIME BASED ON THIS
+# IF YOU WISH TO DECREASE TIME BY SACRIFICING COLOR,
+# Goto color_generator.py and decrease texture_resolution
+
 # Real World Value
 SUN_MASS = 1 # In solar masses effects temprature
 PLANET_DISTANCE = 1 # in AUs (effect teprature)
@@ -21,12 +26,10 @@ ROCK_COLOR = color.Color(0.5, 0.5, 0.5, 1) # ROCK COLOR (effects moutains)
 
 temprature = SUN_MASS * PLANET_DISTANCE * 10 # Effects Ration Of Plants over Rock and Snow
 planet = Planet(
-    50, # Resolution - THIS PROGRAM CAN TAKE TIME BASED ON THIS
-    # IF YOU WISH TO DECREASE TIME BY SACRIFICING COLOR,
-    # Goto color_generator.py and decrease texture_resolution
+    RESOLUTION,
     Planet.FaceRenderMask.ALL,
     ShapeSettings(
-        planet_radius=RADIUS,
+        planet_radius=RADIUS * SEA_LEVEL,
         noise_layers=[
             ShapeSettings.NoiseLayer(
                 enabled=True,
@@ -69,10 +72,10 @@ planet = Planet(
                     Gradient([
                         (0, SEA_COLOR),
                         (0.5 / temprature, color.Color(0.75, 0.75, 0, 1.0)),
-                        (1 / temprature, FLORA_COLOR),
-                        (2 / temprature, FLORA_COLOR * WATER_AVAILABILITY * 0.75),
-                        (3.5 / temprature, FLORA_COLOR * WATER_AVAILABILITY * 0.5),
-                        (5 / temprature, FLORA_COLOR * WATER_AVAILABILITY * 0.25),
+                        (1 / temprature, FLORA_COLOR / WATER_AVAILABILITY),
+                        (2 / temprature, FLORA_COLOR * 0.75 / WATER_AVAILABILITY),
+                        (3.5 / temprature, FLORA_COLOR * 0.5 / WATER_AVAILABILITY),
+                        (5 / temprature, FLORA_COLOR  * 0.25 / WATER_AVAILABILITY),
                         (7.5 / temprature, ROCK_COLOR / temprature * 10),
                         (1, color.Color(1, 1, 1, 1) / temprature * 10)
                     ]),
