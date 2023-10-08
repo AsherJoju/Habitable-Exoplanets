@@ -13,7 +13,7 @@ FLORA_COLOR = color.Color(0.25, 0.75, 0.25, 1.0)
 
 
 planet = Planet(
-    15, # Resolution
+    25, # Resolution
     Planet.FaceRenderMask.ALL,
     ShapeSettings(
         planet_radius=RADIUS,
