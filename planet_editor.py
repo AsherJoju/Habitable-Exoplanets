@@ -40,7 +40,7 @@ planet = Planet(
                         strength=0.25,
                         persistence=0.5,
                         base_roughness=1,
-                        roughness=1.5,
+                        roughness=1.75,
                         min_value=SEA_LEVEL
                     )
                 )
@@ -52,10 +52,10 @@ planet = Planet(
                     filter_type=NoiseSettings.FilterType.RIGID,
                     rigid_noise_settings=NoiseSettings.RigidNoiseSettings(
                         layers=3,
-                        strength=2,
-                        persistence=0.5,
+                        strength=1.5,
+                        persistence=0.75,
                         base_roughness=2,
-                        roughness=4,
+                        roughness=2,
                         min_value=1,
                         sharpness=2,
                         weight_scaler=1
@@ -70,8 +70,8 @@ planet = Planet(
                 ColorSettings.BiomeColorSettings.Biome(
                     Gradient([
                         (0, SEA_COLOR),
-                        (0.5 / temprature, color.Color(0.75, 0.75, 0, 1.0)),
-                        (1 / temprature, FLORA_COLOR),
+                        (1 / temprature, color.Color(0.75, 0.75, 0, 1.0)),
+                        (1.5 / temprature, FLORA_COLOR),
                         (2 / temprature, FLORA_COLOR * 0.75),
                         (3.5 / temprature, FLORA_COLOR * 0.5),
                         (5 / temprature, FLORA_COLOR * 0.25),
