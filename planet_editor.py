@@ -10,8 +10,9 @@ RADIUS = 1 # Radius of the planet
 SEA_LEVEL = 1 # Sea Level, (effects how much land is there)
 SEA_COLOR = color.Color(0.25, 0.25, 1.0, 1.0) # Sea / Water Color (based on Sun and Sky)
 FLORA_COLOR = color.Color(0.25, 0.75, 0.25, 1.0) # Planet Color (effects Land Color)
-WATER_AVAILABILITY = 1 # Efects strength of Flora COlor
-TEMPRATURE = 10 # Effects Ration Of Plants over Rock and Snow
+ROCK_COLOR = color.Color(0.5, 0.5, 0.5, 1) # ROCK COLOR (effects moutains)
+WATER_AVAILABILITY = 0.75 # Efects strength of Flora Color
+TEMPRATURE = 15 # Effects Ration Of Plants over Rock and Snow
 
 
 planet = Planet(
@@ -65,8 +66,8 @@ planet = Planet(
                         (2 / TEMPRATURE, FLORA_COLOR * 0.75),
                         (4 / TEMPRATURE, FLORA_COLOR * 0.5),
                         (5 / TEMPRATURE, FLORA_COLOR * 0.25),
-                        (7 / TEMPRATURE, color.Color(0.5, 0.5, 0.5, 1.0) / TEMPRATURE * 10),
-                        (1, color.Color(1, 1, 1, 1) / TEMPRATURE)
+                        (7 / TEMPRATURE, ROCK_COLOR / TEMPRATURE * 10),
+                        (1, color.Color(1, 1, 1, 1) / TEMPRATURE * 10)
                     ]),
                     tint=color.white,
                     tint_percent=0,
