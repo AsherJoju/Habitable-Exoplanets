@@ -68,6 +68,6 @@ class ColorGenerator:
                 )
         
         self.shader.default_input["texture"] = self.texture
-        self.shader.default_input["height"] = len(self.settings.biome_color_settings.biomes)
-        self.shader.default_input["width"] = self.texture_resolution
+        self.shader.default_input["num_biomes"] = len(self.settings.biome_color_settings.biomes)
+        self.shader.default_input["resolution"] = self.texture_resolution
     

@@ -1,16 +1,23 @@
+from ursina import Ursina, EditorCamera, color
 from scripts.color_settings import ColorSettings
 from scripts.gradient import Gradient
 from scripts.noise_settings import NoiseSettings
-from scripts.shape_settings import ShapeSettings
-from scripts.planet import Planet
-from ursina import color, EditorCamera, Ursina
 
+from scripts.planet import Planet
+from scripts.shape_settings import ShapeSettings
+
+
+RADIUS = 1
+
+
+app = Ursina()
+editor_camera = EditorCamera()
 
 planet = Planet(
-    25, # Resolution
+    15, # Resolution
     Planet.FaceRenderMask.ALL,
     ShapeSettings(
-        planet_radius=1.0,
+        planet_radius=RADIUS,
         noise_layers=[
             ShapeSettings.NoiseLayer(
                 enabled=True,
@@ -18,27 +25,27 @@ planet = Planet(
                 settings=NoiseSettings(
                     filter_type=NoiseSettings.FilterType.SIMPLE,
                     simple_noise_settings=NoiseSettings.SimpleNoiseSettings(
-                        layers=3,
-                        strength=0.5,
+                        layers=5,
+                        strength=1,
                         persistence=0.5,
-                        base_roughness=1,
-                        roughness=2,
-                        min_value=1
+                        base_roughness=2,
+                        roughness=1,
+                        min_value=0
                     )
                 )
             ),
             ShapeSettings.NoiseLayer(
-                enabled=True,
-                use_first_layer_as_mask=True,
+                enabled=False,
+                use_first_layer_as_mask=False,
                 settings=NoiseSettings(
                     filter_type=NoiseSettings.FilterType.RIGID,
                     rigid_noise_settings=NoiseSettings.RigidNoiseSettings(
-                        layers=6,
-                        strength=3,
-                        persistence=0.5,
+                        layers=5,
+                        strength=1,
+                        persistence=0.55,
                         base_roughness=2,
-                        roughness=2,
-                        min_value=1,
+                        roughness=1,
+                        min_value=0,
                         sharpness=2,
                         weight_scaler=1
                     )
@@ -48,44 +55,28 @@ planet = Planet(
     ),
     ColorSettings(
         ColorSettings.BiomeColorSettings(
-            [
+            biomes=[
                 ColorSettings.BiomeColorSettings.Biome(
                     Gradient([
-                        (0, color.Color(0.5, 0.5, 1, 1)),
-                        (0.1, color.Color(0.25, 0.25, 0.75, 1)),
-                        (0.2, color.Color(0.25, 0.75, 0, 1)),
-                        (0.55, color.Color(0.25, 1, 0.25, 1)),
-                        (0.8, color.Color(0.75, 0.75, 0.75, 1)),
-                        (0.8, color.Color(0.5, 0.5, 0.5, 1)),
-                        (1, color.Color(1, 1, 1, 1))
+                        (0, color.black),
+                        (0.5, color.gray),
+                        (1, color.white)
                     ]),
                     tint=color.white,
                     tint_percent=0,
-                    start_height=0.1
+                    start_height=0
                 )
             ],
             noise=NoiseSettings(
                 filter_type=NoiseSettings.FilterType.SIMPLE,
-                simple_noise_settings=NoiseSettings.SimpleNoiseSettings(
-                    layers=3,
-                    strength=1,
-                    persistence=0.5,
-                    base_roughness=1,
-                    roughness=2,
-                    min_value=0
-                )
+                simple_noise_settings=NoiseSettings.SimpleNoiseSettings()
             ),
-            noise_offset=0.75,
-            noise_strength=0.25,
+            noise_offset=0,
+            noise_strength=0,
             blend=0
         )
     )
 )
-
-
-app = Ursina()
-editor_camera = EditorCamera()
-
 planet.construct_planet()
 
 app.run()

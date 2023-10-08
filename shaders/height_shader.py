@@ -8,6 +8,7 @@ class HeightShader(Shader):
         self.default_input = {
             "min_max": min_max.tuple(),
             "texture": texture,
+            "num_biomes": size[0],
             "resolution": size[1]
         }
         
@@ -37,6 +38,7 @@ class HeightShader(Shader):
         
         uniform vec2 min_max;
         uniform vec3 texture[%i * %i];
+        uniform int num_biomes;
         uniform int resolution;
         
         in float vertex_length;
@@ -49,16 +51,14 @@ class HeightShader(Shader):
         }
         
         void main() {
-            int height = %i;
-            
             vec2 index = vec2(inverseLerp(min_max.x, min_max.y, vertex_length), uv.x);
             vec4 color = vec4(texture[
-                int(index.y * (height - 1)) * resolution + int(index.x * resolution)
+                int(index.y * (num_biomes - 1)) * resolution + int(index.x * resolution)
             ], 1);
             
             frag_color = color;
         }
         
-        """ % (*size, size[0])
+        """ % size
         
         super().__init__(vertex=self.vertex, fragment=self.fragment, default_input=self.default_input)
