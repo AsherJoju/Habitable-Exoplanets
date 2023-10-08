@@ -16,7 +16,7 @@ WATER_AVAILABILITY = 0.75 # Efects strength of Flora Color in percent
 TEMPRATURE = SUN_MASS * PLANET_DISTANCE * 10 # Effects Ration Of Plants over Rock and Snow
 
 SEA_COLOR = color.Color(0.25, 0.25, 1.0, 1.0) # Sea / Water Color (based on Sun and Sky)
-FLORA_COLOR = color.Color(0.25, 0.75, 0.25, 1.0) # Planet Color (effects Land Color)
+FLORA_COLOR = color.Color(0.25, 0.75, 0.25, 1.0) # Plant Color (effects Land Color)
 ROCK_COLOR = color.Color(0.5, 0.5, 0.5, 1) # ROCK COLOR (effects moutains)
 
 
@@ -50,7 +50,7 @@ planet = Planet(
                     filter_type=NoiseSettings.FilterType.RIGID,
                     rigid_noise_settings=NoiseSettings.RigidNoiseSettings(
                         layers=3,
-                        strength=2,
+                        strength=1.5,
                         persistence=0.5,
                         base_roughness=2,
                         roughness=4,
@@ -73,7 +73,7 @@ planet = Planet(
                         (2 / TEMPRATURE, FLORA_COLOR * WATER_AVAILABILITY * 0.75),
                         (3.5 / TEMPRATURE, FLORA_COLOR * WATER_AVAILABILITY * 0.5),
                         (5 / TEMPRATURE, FLORA_COLOR * WATER_AVAILABILITY * 0.25),
-                        (7 / TEMPRATURE, ROCK_COLOR / TEMPRATURE * 10),
+                        (7.5 / TEMPRATURE, ROCK_COLOR / TEMPRATURE * 10),
                         (1, color.Color(1, 1, 1, 1) / TEMPRATURE * 10)
                     ]),
                     tint=color.white,
