@@ -2,7 +2,7 @@
 AstroSim - Planet Generation is a Python-based project developed using the Ursina Game Engine, aiming to simulate and generate random planets.
 
 # How To Run
-Install [Python](python.org) and run [planet_editor.py](planet_editor.py).
+Install [Python](https://www.python.org/) and run [planet_editor.py](planet_editor.py).
 At the start, after the imports, there are some variables (constants) in UPPERCASE. Those are the input values, or what you have to edit in order to chnage the look of the planet.
 
 # Input Variables
